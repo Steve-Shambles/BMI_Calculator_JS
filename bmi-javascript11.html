@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BMI Calc V1</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <style type="text/css">
+     body {
+      background-color: powderblue; /* or skyblue */
+      font-family: Arial;
+    }
+    body 
+	{font-family: Arial;}
+    h1 {text-align: center;}
+    label {display: block; margin-top: 10px;}
+    input[type="radio"] {display: inline-block; margin-right: 10px;}
+    input[type="submit"] {margin-top: 20px;}
+	 
+	 fieldset {
+      width: 19%;
+    }
+	
+	input[type="number"] {
+      width: 100%;
+      max-width: 270px;
+	}
+	 img {
+      display: block;
+      margin: 0 auto;
+    }
+	.label-input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    }
+.label-input-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+}	
+  </style>
+</head>
+
+<body>
+  <h1>BMI Calc V1</h1>
+  
+  <div id="logo-frame"></div>
+   <img src="https://i.postimg.cc/1thqBRBK/bmi.jpg" alt="BMI logo image"> 
+  
+  <div class="label-input-container">
+    <label for="weight">Input your weight:</label>
+    <input type="number" id="weight" name="weight" min="1">
+    <fieldset>
+      <legend>Weight Unit</legend>
+      <label><input type="radio" name="weight-unit" value="Kgrams" checked>Kilograms</label>
+      <label><input type="radio" name="weight-unit" value="Pounds">Pounds</label>
+      <label><input type="radio" name="weight-unit" value="Stones">Stones</label>
+    </fieldset>
+    
+    <label for="height">Input your height:</label>
+    <input type="number" id="height" name="height" min="1">
+    <fieldset>
+      <legend>Height Unit</legend>
+      <label><input type="radio" name="height-unit" value="Meters" checked>Meters</label>
+      <label><input type="radio" name="height-unit" value="Inches">Inches</label>
+    </fieldset>
+    
+    <input type="submit" value="Calculate BMI">
+    
+    <div id="result"></div>
+  </div>
+
+
+  <script>
+function showRatings() {
+  var ratings = "A BMI below 18.5 is considered underweight.\n\n" +
+                "A BMI between 18.5 and 24.9 is considered healthy.\n\n" +
+                "A BMI between 25 and 29.9 is considered overweight.\n\n" +
+                "A BMI of between 30 and 39.9 is considered obese.\n\n" +
+                "A BMI of 40 or more is considered severely obese.\n\n" +
+                "\nSource: NHS England.\nPlease see notes in info menu.";
+  alert(ratings);
+}
+
+function calculateBMI() {
+  var weight = parseFloat($('#weight').val());
+  var weightUnit = $('input[name="weight-unit"]:checked').val();
+  var height = parseFloat($('#height').val());
+  var heightUnit = $('input[name="height-unit"]:checked').val();
+
+  if (isNaN(weight) || isNaN(height)) {
+    alert("Please enter a valid weight and height.");
+    return;
+  }
+
+  if (weightUnit === "Pounds") {
+    weight /= 2.20462;
+  } else if (weightUnit === "Stones") {
+    weight *= 14 / 2.20462;
+  }
+
+  if (heightUnit === "Inches") {
+    height *= 0.0254;
+  }
+
+  var bmi = weight / Math.pow(height, 2);
+  var msg = "";
+
+  if (bmi < 18.5) {
+    msg = "Underweight";
+  } else if (bmi >= 18.5 && bmi <= 24.9) {
+    msg = "Healthy";
+  } else if (bmi > 24.9 && bmi <= 29.9) {
+    msg = "Overweight";
+  } else if (bmi > 29.9 && bmi <= 39.9) {
+    msg = "Obese";
+  } else {
+    msg = "Severely Obese";
+  }
+
+  var bmiResult = "\nYour BMI is: " + bmi.toFixed(2) + "\n\n" + msg;
+  alert("BMI Calc result: " + bmiResult);
+}
+
+$(document).ready(function() {
+  $('input[type="submit"]').click(calculateBMI);
+});
+</script>
+<br>
+<u>BMI Limits:</u><br><br>
+A BMI below 18.5 is considered underweight.<br>
+A BMI between 18.5 and 24.9 is considered healthy.<br>
+A BMI between 25 and 29.9 is considered overweight.<br>
+A BMI of between 30 and 39.9 is considered obese.<br>
+A BMI of between 40 + is considered severe obesity.<br>
+<p>Source: <a href="https://www.nhs.uk/common-health-questions/lifestyle/what-is-the-body-mass-index-bmi/">NHS England</a></p>
+
+<br><br><br>
+
+<u>BMI Calc important notes:</u><br><br>
+                           It is important to note that while BMI can be
+                           a useful tool for
+                           assessing weight status, it is not a perfect
+                           measure.
+						   <br><br>
+						   For example,
+                           it does not take into account factors like
+                           muscle mass or
+                           body composition,<br>which can affect a persons
+                           weight but not
+                           necessarily indicate poor health,<br><br>
+                           Additionally, some people may fall into the
+                           healthy range but still
+                           have excess body fat,<br> while others may have a
+                           high BMI but be
+                           very physically fit.<br><br>Therefore
+                           it is always best to consult with a
+                           healthcare professional to determine what a
+                           healthy<br>weight range is
+                           for you, based on your individual health and
+                           lifestyle factors.
+						   <br><br>
+						   (c)Steve Shambles March 2023
+
+</body>
+</html>
